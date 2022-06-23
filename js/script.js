@@ -37,16 +37,18 @@ container.addEventListener("mousedown", enableDraw);
 
 container.addEventListener("mouseup", disableDraw);
 container.addEventListener("drag", disableDraw);
+container.addEventListener("mouseleave", disableDraw);
+
+const cells = document.querySelectorAll(".cell");
+preventDrag();
 
 function enableDraw(){
-    let cells = document.querySelectorAll(".cell");
     cells.forEach(function(cell){
         cell.addEventListener("mouseover", cellFill)
     })
 }
 
 function disableDraw(){
-    let cells = document.querySelectorAll(".cell");
     cells.forEach(function(cell){
         cell.removeEventListener("mouseover", cellFill);
     })
@@ -54,4 +56,23 @@ function disableDraw(){
 
 function cellFill(){
     this.classList.add('activated');
+}
+
+function preventDrag(){
+    cells.forEach(function(cell){
+        cell.addEventListener("dragstart", function(e){
+            e.preventDefault();
+        });
+        cell.addEventListener("drop", function(e){
+            e.preventDefault();
+        });
+    })
+
+    container.addEventListener("dragstart", function(e){
+        e.preventDefault();
+    });
+
+    container.addEventListener("drop", function(e){
+        e.preventDefault();
+    });
 }

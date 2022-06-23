@@ -20,8 +20,38 @@ for(let i=0; i<NUM_ROWS; i++){
             cell.style.borderLeft = '1px solid black';
         }
 
+        // cell.addEventListener("mouseover", function(){
+        //     this.classList.add('activated');
+        // })
+
         row.appendChild(cell);
     }
     
     container.appendChild(row);
+}
+
+
+
+
+container.addEventListener("mousedown", enableDraw);
+
+container.addEventListener("mouseup", disableDraw);
+container.addEventListener("drag", disableDraw);
+
+function enableDraw(){
+    let cells = document.querySelectorAll(".cell");
+    cells.forEach(function(cell){
+        cell.addEventListener("mouseover", cellFill)
+    })
+}
+
+function disableDraw(){
+    let cells = document.querySelectorAll(".cell");
+    cells.forEach(function(cell){
+        cell.removeEventListener("mouseover", cellFill);
+    })
+}
+
+function cellFill(){
+    this.classList.add('activated');
 }

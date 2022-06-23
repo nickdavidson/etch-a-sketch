@@ -3,13 +3,17 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    width: 768px;
+    box-sizing: border-box;
+    margin: auto;
 }
 
 .cell {
-    height: 16px;
     width: 16px;
+    height: 16px;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
+    box-sizing: border-box;
 }
 
 .row {

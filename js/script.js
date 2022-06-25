@@ -1,16 +1,17 @@
 const container = document.querySelector('#container');
 
-drawBoard(48);
+const BOARD_SIZE = 48;
+const CELL_SIZE = 16;
 
-
-container.addEventListener("mousedown", enableDraw);
-
-container.addEventListener("mouseup", disableDraw);
-container.addEventListener("drag", disableDraw);
-container.addEventListener("mouseleave", disableDraw);
+drawBoard(BOARD_SIZE);
 
 const cells = document.querySelectorAll(".cell");
+
 preventDrag();
+
+container.addEventListener("mousedown", enableDraw);
+document.addEventListener("mouseup", disableDraw);
+container.addEventListener("drag", disableDraw);
 
 function enableDraw(){
     cells.forEach(function(cell){
@@ -22,7 +23,6 @@ function enableDraw(){
 function disableDraw(){
     cells.forEach(function(cell){
         cell.removeEventListener("mouseover", cellFill);
-        cell.removeEventListener("mousedown", cellFill);
     })
 }
 
@@ -51,7 +51,7 @@ function preventDrag(){
 }
 
 function drawBoard(size){
-    
+
     for(let i=0; i<size; i++){
         let row = document.createElement('div');
         row.className = 'row';
@@ -60,6 +60,8 @@ function drawBoard(size){
             let cell = document.createElement('div');
             cell.id = `cell-${i+1}-${j+1}`;
             cell.className = 'cell';
+            cell.style.width = `${CELL_SIZE}px`;
+            cell.style.height = `${CELL_SIZE}px`;
     
             if(i===0){
                 cell.style.borderTop = '1px solid black';
@@ -74,4 +76,6 @@ function drawBoard(size){
         
         container.appendChild(row);
     }
+
+    container.style.width = `${size*CELL_SIZE}px`;
 }

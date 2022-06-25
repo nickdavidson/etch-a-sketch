@@ -1,36 +1,6 @@
 const container = document.querySelector('#container');
 
-const NUM_ROWS = 48;
-const NUM_COLS = NUM_ROWS;
-
-for(let i=0; i<NUM_ROWS; i++){
-    let row = document.createElement('div');
-    row.className = 'row';
-
-    for(let j=0; j<NUM_COLS; j++){
-        let cell = document.createElement('div');
-        cell.id = `cell-${i+1}-${j+1}`;
-        cell.className = 'cell';
-
-        if(i===0){
-            cell.style.borderTop = '1px solid black';
-        }
-
-        if(j===0){
-            cell.style.borderLeft = '1px solid black';
-        }
-
-        // cell.addEventListener("mouseover", function(){
-        //     this.classList.add('activated');
-        // })
-
-        row.appendChild(cell);
-    }
-    
-    container.appendChild(row);
-}
-
-
+drawBoard(48);
 
 
 container.addEventListener("mousedown", enableDraw);
@@ -44,13 +14,15 @@ preventDrag();
 
 function enableDraw(){
     cells.forEach(function(cell){
-        cell.addEventListener("mouseover", cellFill)
+        cell.addEventListener("mouseover", cellFill);
+        cell.addEventListener("mousedown", cellFill);
     })
 }
 
 function disableDraw(){
     cells.forEach(function(cell){
         cell.removeEventListener("mouseover", cellFill);
+        cell.removeEventListener("mousedown", cellFill);
     })
 }
 
@@ -59,6 +31,7 @@ function cellFill(){
 }
 
 function preventDrag(){
+
     cells.forEach(function(cell){
         cell.addEventListener("dragstart", function(e){
             e.preventDefault();
@@ -75,4 +48,30 @@ function preventDrag(){
     container.addEventListener("drop", function(e){
         e.preventDefault();
     });
+}
+
+function drawBoard(size){
+    
+    for(let i=0; i<size; i++){
+        let row = document.createElement('div');
+        row.className = 'row';
+    
+        for(let j=0; j<size; j++){
+            let cell = document.createElement('div');
+            cell.id = `cell-${i+1}-${j+1}`;
+            cell.className = 'cell';
+    
+            if(i===0){
+                cell.style.borderTop = '1px solid black';
+            }
+    
+            if(j===0){
+                cell.style.borderLeft = '1px solid black';
+            }
+    
+            row.appendChild(cell);
+        }
+        
+        container.appendChild(row);
+    }
 }

@@ -6,13 +6,15 @@ const CELL_SIZE = 16;
 const newBoardButton = document.createElement("button");
 newBoardButton.innerHTML = "New Board";
 newBoardButton.id = "new-board";
+newBoardButton.addEventListener('click', removeBoard);
 
+let cells;
 
 
 drawBoard(BOARD_SIZE);
 container.appendChild(newBoardButton);
 
-const cells = document.querySelectorAll(".cell");
+
 
 preventDrag();
 
@@ -85,4 +87,16 @@ function drawBoard(size){
     }
 
     container.style.width = `${size*CELL_SIZE}px`;
+    updateCells();
+}
+
+function removeBoard(){
+    cells.forEach(function(cell){
+        cell.remove();
+    });
+    drawBoard(BOARD_SIZE);
+}
+
+function updateCells(){
+    cells = document.querySelectorAll(".cell");
 }

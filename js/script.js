@@ -3,6 +3,9 @@ const container = document.querySelector('#container');
 const BOARD_SIZE = 48;
 const CELL_SIZE = 16;
 
+const board = document.createElement("div");
+board.id = "board";
+
 const newBoardButton = document.createElement("button");
 newBoardButton.innerHTML = "New Board";
 newBoardButton.id = "new-board";
@@ -10,9 +13,10 @@ newBoardButton.addEventListener('click', removeBoard);
 
 let cells;
 
-
-drawBoard(BOARD_SIZE);
+container.appendChild(board);
 container.appendChild(newBoardButton);
+drawBoard(BOARD_SIZE);
+
 
 
 
@@ -83,7 +87,7 @@ function drawBoard(size){
             row.appendChild(cell);
         }
         
-        container.appendChild(row);
+        board.appendChild(row);
     }
 
     container.style.width = `${size*CELL_SIZE}px`;

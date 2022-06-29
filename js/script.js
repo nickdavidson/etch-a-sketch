@@ -3,7 +3,14 @@ const container = document.querySelector('#container');
 const BOARD_SIZE = 48;
 const CELL_SIZE = 16;
 
+const newBoardButton = document.createElement("button");
+newBoardButton.innerHTML = "New Board";
+newBoardButton.id = "new-board";
+
+
+
 drawBoard(BOARD_SIZE);
+container.appendChild(newBoardButton);
 
 const cells = document.querySelectorAll(".cell");
 

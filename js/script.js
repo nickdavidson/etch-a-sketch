@@ -9,7 +9,7 @@ board.id = "board";
 const newBoardButton = document.createElement("button");
 newBoardButton.innerHTML = "New Board";
 newBoardButton.id = "new-board";
-newBoardButton.addEventListener('click', removeBoard);
+newBoardButton.addEventListener('click', newBoard);
 
 let cells;
 
@@ -98,9 +98,14 @@ function removeBoard(){
     cells.forEach(function(cell){
         cell.remove();
     });
-    drawBoard(BOARD_SIZE);
 }
 
 function updateCells(){
     cells = document.querySelectorAll(".cell");
+}
+
+function newBoard(){
+    removeBoard();
+    let input = prompt("Grid size: ");
+    drawBoard(input);
 }

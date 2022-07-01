@@ -1,7 +1,6 @@
 const container = document.querySelector('#container');
 
 const BOARD_SIZE = 48;
-const CELL_SIZE = 16;
 
 const board = document.createElement("div");
 board.id = "board";
@@ -17,12 +16,9 @@ container.appendChild(board);
 container.appendChild(newBoardButton);
 drawBoard(BOARD_SIZE);
 
-
-
-
 preventDrag();
 
-container.addEventListener("mousedown", enableDraw);
+board.addEventListener("mousedown", enableDraw);
 document.addEventListener("mouseup", disableDraw);
 container.addEventListener("drag", disableDraw);
 
@@ -40,7 +36,27 @@ function disableDraw(){
 }
 
 function cellFill(){
-    this.classList.add('activated');
+    let red = 0;
+    let green = 0;
+    let blue = 0;
+
+
+    let random = false;
+
+    if(random){
+        red = Math.floor(Math.random()*255);
+        green = Math.floor(Math.random()*255);
+        blue = Math.floor(Math.random()*255);
+    }
+
+
+
+    let alpha = this.getAttribute("alpha")*1;
+    if(alpha<1){
+        alpha+=0.10;
+    }
+    this.setAttribute(`alpha`, `${alpha}`);
+    this.style.backgroundColor = `rgba(${red},${green},${blue},${alpha})`;
 }
 
 function preventDrag(){
@@ -65,6 +81,9 @@ function preventDrag(){
 
 function drawBoard(size){
 
+    console.log(container.getAttribute("width"));
+    let CELL_SIZE = 800/size;
+
     for(let i=0; i<size; i++){
         let row = document.createElement('div');
         row.className = 'row';
@@ -75,6 +94,7 @@ function drawBoard(size){
             cell.className = 'cell';
             cell.style.width = `${CELL_SIZE}px`;
             cell.style.height = `${CELL_SIZE}px`;
+            cell.setAttribute("alpha", "0");
     
             if(i===0){
                 cell.style.borderTop = '1px solid black';

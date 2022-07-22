@@ -5,15 +5,44 @@ const BOARD_SIZE = 48;
 const board = document.createElement("div");
 board.id = "board";
 
+const inputPanel = document.createElement("div");
+inputPanel.id = "input-panel";
+
 const newBoardButton = document.createElement("button");
 newBoardButton.innerHTML = "New Board";
 newBoardButton.id = "new-board";
 newBoardButton.addEventListener('click', newBoard);
 
+const sliderContainer = document.createElement("div");
+sliderContainer.id = "slider-container";
+
+const gridSlider = document.createElement("input");
+gridSlider.id = "slider";
+gridSlider.type = "range";
+gridSlider.min = "8";
+gridSlider.max = "96";
+gridSlider.value = BOARD_SIZE;
+
+const sliderOutput = document.createElement("span");
+sliderOutput.id = "slider-output";
+sliderOutput.innerHTML = `${gridSlider.value}x${gridSlider.value}`;
+
+
+
+sliderContainer.appendChild(gridSlider);
+sliderContainer.appendChild(sliderOutput);
+
+inputPanel.appendChild(newBoardButton);
+inputPanel.appendChild(sliderContainer);
+
+gridSlider.oninput = function() {
+    sliderOutput.innerHTML = `${this.value}x${this.value}`;
+}
+
 let cells;
 
 container.appendChild(board);
-container.appendChild(newBoardButton);
+container.appendChild(inputPanel);
 drawBoard(BOARD_SIZE);
 
 preventDrag();
@@ -126,6 +155,6 @@ function updateCells(){
 
 function newBoard(){
     removeBoard();
-    let input = prompt("Grid size: ");
-    drawBoard(input);
+    //let input = prompt("Grid size: ");
+    drawBoard(gridSlider.value);
 }

@@ -8,6 +8,21 @@
     margin: auto;
 }
 
+#input-panel {
+    display: flex;
+    width: 100%;
+}
+
+#slider-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+#slider {
+    width: 100%;
+}
+
 .cell {
     border-right: 1px solid black;
     border-bottom: 1px solid black;

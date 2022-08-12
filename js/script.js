@@ -1,5 +1,12 @@
-const container = document.querySelector('#container');
+let isMouseDown = false;
+document.body.addEventListener('mousedown', function (){
+    isMouseDown = true;
+});
+document.body.addEventListener('mouseup', function (){
+    isMouseDown = false;
+});
 
+const container = document.querySelector('#container');
 const BOARD_SIZE = 48;
 
 const board = document.createElement("div");
@@ -47,24 +54,11 @@ drawBoard(BOARD_SIZE);
 
 preventDrag();
 
-board.addEventListener("mousedown", enableDraw);
-document.addEventListener("mouseup", disableDraw);
-container.addEventListener("drag", disableDraw);
 
-function enableDraw(){
-    cells.forEach(function(cell){
-        cell.addEventListener("mouseover", cellFill);
-        cell.addEventListener("mousedown", cellFill);
-    })
-}
-
-function disableDraw(){
-    cells.forEach(function(cell){
-        cell.removeEventListener("mouseover", cellFill);
-    })
-}
-
-function cellFill(){
+function cellFill(e){
+    if((e.type==='mouseover') && !isMouseDown){
+        return;
+    }
     let red = 0;
     let green = 0;
     let blue = 0;
@@ -77,8 +71,6 @@ function cellFill(){
         green = Math.floor(Math.random()*255);
         blue = Math.floor(Math.random()*255);
     }
-
-
 
     let alpha = this.getAttribute("alpha")*1;
     if(alpha<1){
@@ -132,7 +124,10 @@ function drawBoard(size){
             if(j===0){
                 cell.style.borderLeft = '1px solid black';
             }
-    
+
+            cell.addEventListener("mouseover", cellFill);
+            cell.addEventListener("mousedown", cellFill);
+
             row.appendChild(cell);
         }
         
@@ -155,6 +150,5 @@ function updateCells(){
 
 function newBoard(){
     removeBoard();
-    //let input = prompt("Grid size: ");
     drawBoard(gridSlider.value);
 }

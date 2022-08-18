@@ -18,24 +18,34 @@ inputPanel.id = "input-panel";
 const optionPanel = document.createElement("div");
 optionPanel.id = "option-panel";
 
+const solidButton = document.createElement("button");
+solidButton.innerHTML = "Solid Mode "
+solidButton.id = "solid-button";
+solidButton.className = "option-btn";
+solidButton.addEventListener('click', solidToggle);
+
 const shaderButton = document.createElement("button");
 shaderButton.innerHTML = "Shading Mode OFF"
 shaderButton.id = "shader-button";
+shaderButton.className = "option-btn";
 shaderButton.addEventListener('click', shadingToggle);
 
 const randomRGBButton = document.createElement("button");
 randomRGBButton.innerHTML = "Rainbow Mode OFF"
 randomRGBButton.id = "rainbow-button";
+randomRGBButton.className = "option-btn";
 randomRGBButton.addEventListener('click', randomRGBToggle);
 
 const eraserButton = document.createElement("button");
 eraserButton.innerHTML = "Eraser OFF"
 eraserButton.id = "eraser-button";
+eraserButton.className = "option-btn";
 eraserButton.addEventListener('click', eraserToggle);
 
 const newBoardButton = document.createElement("button");
 newBoardButton.innerHTML = "New Board";
 newBoardButton.id = "new-board";
+newBoardButton.className = "option-btn";
 newBoardButton.addEventListener('click', newBoard);
 
 const sliderContainer = document.createElement("div");
@@ -52,16 +62,19 @@ const sliderOutput = document.createElement("span");
 sliderOutput.id = "slider-output";
 sliderOutput.innerHTML = `${gridSlider.value}x${gridSlider.value}`;
 
+const midPanel = document.createElement("div");
+midPanel.id = "mid-panel";
 
 
 sliderContainer.appendChild(gridSlider);
 sliderContainer.appendChild(sliderOutput);
 
+optionPanel.appendChild(solidButton);
 optionPanel.appendChild(shaderButton);
 optionPanel.appendChild(randomRGBButton);
 optionPanel.appendChild(eraserButton);
+optionPanel.appendChild(newBoardButton);
 
-inputPanel.appendChild(newBoardButton);
 inputPanel.appendChild(sliderContainer);
 
 gridSlider.oninput = function() {
@@ -70,10 +83,15 @@ gridSlider.oninput = function() {
 
 let cells;
 
+
+
+
+
 container.appendChild(optionPanel);
-container.appendChild(board);
+container.appendChild(midPanel);
+midPanel.append(board);
 drawBoard(BOARD_SIZE);
-board.append(inputPanel);
+midPanel.append(inputPanel);
 
 preventDrag();
 
@@ -81,6 +99,20 @@ preventDrag();
 let shadingMode = false;
 let randomRGBMode = false;
 let eraserMode = false;
+
+function solidToggle(){
+    if(eraserMode){
+        eraserToggle();
+    }
+
+    if(shadingMode){
+        shadingToggle();
+    }
+
+    if(randomRGBMode){
+        randomRGBToggle();
+    }
+}
 
 function shadingToggle(){
     if(eraserMode){
@@ -194,8 +226,8 @@ function preventDrag(){
 
 function drawBoard(size){
 
-    console.log(container.getAttribute("width"));
-    let CELL_SIZE = 800/size;
+    let board_width = board.offsetWidth;
+    let CELL_SIZE = board_width/size;
 
     for(let i=0; i<size; i++){
         let row = document.createElement('div');
@@ -232,6 +264,7 @@ function drawBoard(size){
 
 function removeBoard(){
     cells.forEach(function(cell){
+        console.log("removed");
         cell.remove();
     });
 }
